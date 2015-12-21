@@ -215,7 +215,9 @@ class MainApp(MainFrame):
         self.example_text2 = wx.StaticText(self,label='Select what to plot')
         self.checklift       = wx.CheckBox(self, -1, label = "Lift")  
         self.checkdrag       = wx.CheckBox(self, -1, label = "Drag")  
-        
+        self.lift_label      = wx.StaticText(self, -1 , label= " ")
+        self.drag_label      = wx.StaticText(self, -1 , label= " ")        
+    
         self.fileline2    = wx.TextCtrl(self, -1,
             value='resid.out',
             size=wx.Size(250,-1),
@@ -245,6 +247,9 @@ class MainApp(MainFrame):
         vbox1.Add(self.example_text2, 0, wx.ALIGN_CENTER | wx.ALL, 1)    
         vbox1.Add(self.checklift,     0, wx.ALIGN_CENTER | wx.ALL, 1) 
         vbox1.Add(self.checkdrag,     0, wx.ALIGN_CENTER | wx.ALL, 1) 
+        vbox1.AddSpacer(10) 
+        vbox1.Add(self.lift_label,    0, wx.ALIGN_LEFT   | wx.ALL, 1)
+        vbox1.Add(self.drag_label,    0, wx.ALIGN_LEFT   | wx.ALL, 1)
         vbox1.AddSpacer(20)
         vbox1.Add(self.example_text3, 0, wx.ALIGN_CENTER | wx.ALL, 1)    
         vbox1.Add(self.fileline2,      0, wx.ALIGN_CENTER | wx.ALL, 1)   
@@ -300,6 +305,13 @@ class MainApp(MainFrame):
     def on_plot_ld( self,event ):
         self.plotwin.Show() 
         iters, lifta, draga = readfomo( self.fileline.GetValue() )
+        tlift, tdrag = lifta,draga
+        for i in range(5):
+            tdrag = elimout(tdrag)
+            tlift = elimout(tlift)                 
+        alift,adrag = str(np.average(tlift)),str(np.average(tdrag))
+        self.lift_label.SetLabel( ''.join(['Steady State Lift =   ', alift ]) )
+        self.drag_label.SetLabel( ''.join(['Steady State Drag =   ', adrag ]) )
         if self.checklift.GetValue():  
             self.plotwin.on_plot( iters,lifta,'Iteration','Lift' )
         else: 
