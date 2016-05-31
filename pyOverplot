@@ -23,11 +23,11 @@ def readfomo( fomofile ):
 			elif ct == 1: 
 				iters.append( int(float( line.split()[0] ) ) )
 			elif ct == 3:
-				lift = lift + float(line.split()[3])    
-				drag = drag + float(line.split()[4])
+				lift += float(line.split()[3])    
+				drag += float(line.split()[4])
 			elif ct == 4:
-				lift = lift + float(line.split()[0])
-				drag = drag + float(line.split()[1]) 
+				lift += float(line.split()[0]) + float(line.split()[3])
+				drag += float(line.split()[1]) + float(line.split()[4])
 			elif ct == 5:
 				draga.append(drag)
 				lifta.append(lift)
