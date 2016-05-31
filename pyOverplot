@@ -22,9 +22,8 @@ def readfomo( fomofile ):
 				ct, lift, drag = 0,0.0,0.0
 			elif ct == 1: 
 				iters.append( int(float( line.split()[0] ) ) )
-			elif ct == 2: 
-				lift = lift + float(line.split()[2])    
 			elif ct == 3:
+				lift = lift + float(line.split()[3])    
 				drag = drag + float(line.split()[4])
 			elif ct == 4:
 				lift = lift + float(line.split()[0])
